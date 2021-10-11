@@ -5,7 +5,7 @@ ShopiMock is a complete mock of Shopify Admin API which runs on local webserver 
 
 
 ```bash
-git clone git clone https://github.com/hashiromer/ShopiMock.git
+git clone https://github.com/hashiromer/ShopiMock.git
 cd ShopiMock
 npm install
 npm run start
