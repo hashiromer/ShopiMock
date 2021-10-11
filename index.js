@@ -1,48 +1,38 @@
-import { ApolloServer } from "apollo-server";
-import { loadFile } from "graphql-import-files";
-import { typeDefs, resolvers, mocks } from "graphql-scalars";
-import faker from "faker";
-const schema = loadFile("./schema.graphql");
-import path from "path";
+import { ApolloServer } from "apollo-server-express";
+import { ApolloServerPluginDrainHttpServer } from "apollo-server-core";
+import express from "express";
+import http from "http";
+import cors from "cors";
+import { typeDefs, resolvers } from "graphql-scalars";
 import fs from "fs";
-const __dirname = path.resolve(path.dirname(""));
+import mocks from "./mocks.js";
+import dotenv from "dotenv";
 
-const testFolder = path.resolve(__dirname, "assets", "images");
+dotenv.config();
 
-let totalImages = 0;
+const schema = fs.readFileSync("schema.graphql", "utf8");
 
-const imageURLs = [];
-fs.readdirSync(testFolder).forEach((file) => {
-  totalImages += 1;
-  imageURLs.push(path.join("assets", "images", file));
-});
+const app = express();
+app.use(express.static("assets"));
+app.use(cors());
 
-const mocks1 = {
-  StorefrontID: () => "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzEwMDc5Nzg1MTAw",
-  JSON: () => faker.datatype.json(),
-  HTML: () => "<p>Grey cotton knit sweater.</p>",
-  FormattedString: () =>
-    "Your current domain is <strong>johns-apparel.myshopify.com</strong>",
-  Decimal: () => 22.8,
-  ARN: () => "arn:partition:service:region:account-id:resource-id",
-  UtcOffset: () => "-07:00",
-  UnsignedInt64: () => faker.datatype.number(),
-  ImageURL: () => imageURLs[faker.datatype.number(totalImages - 1)],
-};
+const httpServer = http.createServer(app);
 
 const server = new ApolloServer({
   typeDefs: [...typeDefs, schema],
   resolvers: {
     ...resolvers,
   },
-  mocks: {
-    ...mocks,
-    ...mocks1,
-  },
+  mocks,
+  plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
 });
 
-server.listen().then(({ url }) => {
-  console.log(`
-    🎈 Server is running at ${url}
-  `);
-});
+await server.start();
+
+server.applyMiddleware({ app });
+await new Promise((resolve) =>
+  httpServer.listen({ port: process.env.PORT }, resolve)
+);
+console.log(
+  `🚀 Server ready at http://localhost:${process.env.PORT}${server.graphqlPath}`
+);

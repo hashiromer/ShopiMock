@@ -23,6 +23,31 @@ Image URL.
 """
 scalar ImageURL
 
+scalar Address1
+
+scalar Address2
+
+scalar City
+
+scalar Company
+
+scalar FormatedName
+
+scalar FormattedArea
+
+scalar FirstName
+scalar LastName
+
+scalar FullName
+
+scalar Province
+
+scalar ProvinceCode
+
+scalar ZipCode
+
+scalar Country
+
 """
 Represents the access scope permission that is applicable to a merchant's shop, such as `read_orders`.
 """
@@ -16952,7 +16977,7 @@ type Image implements HasMetafields {
   """
   The original height of the image in pixels. Returns `null` if the image is not hosted by Shopify.
   """
-  height: Int
+  height: PositiveInt
 
   """
   A unique identifier for the image.
@@ -17084,12 +17109,12 @@ type Image implements HasMetafields {
     """
     Image width in pixels between 1 and 5760.
     """
-    maxWidth: Int
+    maxWidth: PositiveInt
 
     """
     Image height in pixels between 1 and 5760.
     """
-    maxHeight: Int
+    maxHeight: PositiveInt
 
     """
     Crops the image according to the specified region.
@@ -17110,7 +17135,7 @@ type Image implements HasMetafields {
   """
   The original width of the image in pixels. Returns `null` if the image is not hosted by Shopify.
   """
-  width: Int
+  width: PositiveInt
 }
 
 """
@@ -18763,27 +18788,27 @@ type MailingAddress implements Node {
   """
   The first line of the address. Typically the street address or PO Box number.
   """
-  address1: String
+  address1: Address1
 
   """
   The second line of the address. Typically the number of the apartment, suite, or unit.
   """
-  address2: String
+  address2: Address2
 
   """
   The name of the city, district, village, or town.
   """
-  city: String
+  city: City
 
   """
   The name of the customer's company or organization.
   """
-  company: String
+  company: Company
 
   """
   The name of the country.
   """
-  country: String
+  country: Country
 
   """
   The two-letter code for the country of the address.
@@ -18802,7 +18827,7 @@ type MailingAddress implements Node {
   """
   The first name of the customer.
   """
-  firstName: String
+  firstName: FirstName
 
   """
   A formatted version of the address, customized by the provided arguments.
@@ -18817,12 +18842,12 @@ type MailingAddress implements Node {
     Whether to include the customer's company in the formatted address.
     """
     withCompany: Boolean = true
-  ): [String!]!
+  ): [FormatedName!]!
 
   """
   A comma-separated list of the values for city, province, and country.
   """
-  formattedArea: String
+  formattedArea: FormattedArea
 
   """
   A globally-unique identifier.
@@ -18832,7 +18857,7 @@ type MailingAddress implements Node {
   """
   The last name of the customer.
   """
-  lastName: String
+  lastName: LastName
 
   """
   The latitude coordinate of the customer address.
@@ -18847,7 +18872,7 @@ type MailingAddress implements Node {
   """
   The full name of the customer, based on firstName and lastName.
   """
-  name: String
+  name: FullName
 
   """
   A unique phone number for the customer.
@@ -18859,19 +18884,19 @@ type MailingAddress implements Node {
   """
   The region of the address, such as the province, state, or district.
   """
-  province: String
+  province: Province
 
   """
   The two-letter code for the region.
 
   For example, ON.
   """
-  provinceCode: String
+  ProvinceCode: ProvinceCode
 
   """
   The zip or postal code of the address.
   """
-  zip: String
+  zip: ZipCode
 }
 
 """
