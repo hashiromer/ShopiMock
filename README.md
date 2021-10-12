@@ -18,7 +18,7 @@ This should get the server up and running and the endpoint to be queried would b
 ## Usage
 
 The endpoint can be queried programmatically from any application which can issue HTTP POST requests like curl or from javaScript. However it would
-be more convenient to build queries first interactively using a dedicated Graphql IDE like Graphiql, Apollo Studio,Insomnia or GraphQL Playground etc. I have found Apollo Studio to be the most 
+be more convenient to build queries first interactively using a dedicated Graphql IDE like Graphiql, Apollo Studio,Insomnia or GraphQL Playground etc.
 
 ## Current Limitations
 
